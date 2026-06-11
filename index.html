@@ -5,9 +5,41 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>LSaiko — Medical AI & Regulatory Quality Engineering</title>
 <meta name="description" content="Portfolio of LSaiko: medical imaging AI, FDA/IEC-compliant SaMD validation tooling, manufacturing quality engineering, and public-health surveillance. 13 open-source projects." />
+<meta name="author" content="LSaiko" />
+<meta name="keywords" content="medical AI, deep learning, chest X-ray, melanoma classifier, Grad-CAM, SaMD validation, FDA 21 CFR 820, ISO 13485, IEC 62304, pFMEA, disease surveillance, CDC NNDSS, portfolio" />
+<meta name="theme-color" content="#0a1628" />
+<link rel="canonical" href="https://lsaiko.github.io/" />
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+
+<!-- Open Graph -->
 <meta property="og:title" content="LSaiko — Medical AI & Regulatory Quality" />
 <meta property="og:description" content="Medical imaging deep learning, FDA/ISO compliance tooling, and real-time disease surveillance — 13 open-source projects in one place." />
 <meta property="og:type" content="website" />
+<meta property="og:url" content="https://lsaiko.github.io/" />
+<meta property="og:site_name" content="LSaiko" />
+<meta property="og:image" content="https://lsaiko.github.io/assets/og-image.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="LSaiko portfolio — Medical AI that ships with the paperwork to prove it. 13 projects, 5 imaging models, 5 quality tools, 22 diseases tracked." />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="LSaiko — Medical AI & Regulatory Quality" />
+<meta name="twitter:description" content="Clinical imaging AI with explainability, FDA/ISO validation tooling, and live CDC disease surveillance — 13 open-source projects." />
+<meta name="twitter:image" content="https://lsaiko.github.io/assets/og-image.png" />
+
+<!-- Structured data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "LSaiko",
+  "url": "https://lsaiko.github.io/",
+  "sameAs": ["https://github.com/LSaiko"],
+  "jobTitle": "Medical AI & Regulatory Quality Engineer",
+  "knowsAbout": ["Medical Imaging AI","Deep Learning","FDA 21 CFR 820","ISO 13485","IEC 62304","Software as a Medical Device","Public Health Surveillance"]
+}
+</script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -126,14 +158,34 @@ footer a:hover{text-decoration:underline}
 
 .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
 .reveal.in{opacity:1;transform:none}
+
+/* card thumbnails */
+.card-thumb{display:block;width:calc(100% + 2.8rem);margin:-1.4rem -1.4rem 1rem;border-bottom:1px solid var(--border);border-radius:15px 15px 0 0;overflow:hidden}
+.card-thumb svg{display:block;width:100%;height:84px}
+.feat-card .card-thumb{width:calc(100% + 3.6rem);margin:-1.8rem -1.8rem 1.3rem;border-radius:18px 18px 0 0}
+.feat-card .card-thumb svg{height:120px}
+
+/* accessibility */
+.skip-link{position:absolute;left:-999px;top:0;z-index:200;background:var(--teal);color:var(--navy);padding:.7rem 1.2rem;border-radius:0 0 10px 0;font-weight:700;font-size:.85rem}
+.skip-link:focus{left:0}
+a:focus-visible,button:focus-visible{outline:2px solid var(--teal);outline-offset:3px;border-radius:6px}
+.card:focus-visible,.feat-card:focus-visible{outline:2px solid var(--teal);outline-offset:3px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
+  .reveal{opacity:1;transform:none}
+  .aurora::before,.aurora::after{animation:none}
+}
 @media(max-width:600px){nav{padding:.7rem 1rem}.hero{padding:4rem 1.2rem 3rem}section{padding:3rem 1.2rem}}
 </style>
 </head>
 <body>
-<div class="aurora"></div>
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<div class="aurora" aria-hidden="true"></div>
 
-<nav>
-  <a class="brand" href="#top">
+<nav aria-label="Primary">
+  <a class="brand" href="#top" aria-label="LSaiko — home">
     <div class="brand-mark">LS</div>
     <div>
       <span class="brand-name">LSaiko</span>
@@ -151,8 +203,9 @@ footer a:hover{text-decoration:underline}
   </div>
 </nav>
 
+<main id="main-content">
 <div class="hero" id="top">
-  <div class="hero-badge"><span class="pulse"></span>13 open-source projects · Python &amp; deep learning</div>
+  <div class="hero-badge"><span class="pulse" aria-hidden="true"></span>13 open-source projects · Python &amp; deep learning</div>
   <h1>Medical AI that ships<br/><span class="grad">with the paperwork to prove it</span></h1>
   <p class="hero-sub">
     I build deep-learning systems for clinical imaging and the FDA/ISO validation tooling that gets them
@@ -176,7 +229,7 @@ footer a:hover{text-decoration:underline}
     <div><div class="stat-val" id="stat-stars">★</div><div class="stat-label">Total GitHub stars</div></div>
     <div><div class="stat-val" id="stat-langs">Py</div><div class="stat-label">Primary language</div></div>
   </div>
-  <div id="live-status" class="live-status">Loading live data from GitHub…</div>
+  <div id="live-status" class="live-status" role="status" aria-live="polite">Loading live data from GitHub…</div>
 </div>
 
 <!-- FEATURED -->
@@ -342,6 +395,7 @@ footer a:hover{text-decoration:underline}
     <strong>Note on intended use:</strong> these projects are research, educational, and tooling artifacts. The clinical models are not cleared diagnostic devices, and the compliance generators produce preliminary drafts that require qualified human review before any regulatory submission.
   </div>
 </section>
+</main>
 
 <footer>
   <div style="max-width:980px;margin:0 auto">
@@ -352,6 +406,29 @@ footer a:hover{text-decoration:underline}
 </footer>
 
 <script>
+// ── Card thumbnails (themed SVG banners by category) ───────────────────────
+(function(){
+  const T={
+    imaging:{c:'#00d4aa',svg:'<rect width="400" height="120" fill="#0b1c33"/><g stroke="#1e3a5f" stroke-width="1">'+Array.from({length:9},(_,i)=>`<line x1="${i*50}" y1="0" x2="${i*50}" y2="120"/>`).join('')+Array.from({length:3},(_,i)=>`<line x1="0" y1="${i*40+20}" x2="400" y2="${i*40+20}"/>`).join('')+'</g><ellipse cx="150" cy="60" rx="70" ry="42" fill="#00d4aa" opacity="0.18"/><ellipse cx="150" cy="60" rx="40" ry="24" fill="#00d4aa" opacity="0.28"/><ellipse cx="150" cy="60" rx="16" ry="11" fill="#f59e0b" opacity="0.7"/><rect x="250" y="30" width="110" height="60" rx="6" fill="none" stroke="#00d4aa" stroke-width="2" opacity="0.6"/><text x="305" y="66" text-anchor="middle" font-family="monospace" font-size="13" fill="#00d4aa">Grad-CAM</text>'},
+    quality:{c:'#8b5cf6',svg:'<rect width="400" height="120" fill="#0d1830"/><g transform="translate(40,28)"><rect width="150" height="64" rx="6" fill="#0f1f3d" stroke="#8b5cf6" stroke-width="1.5" opacity="0.6"/>'+Array.from({length:3},(_,i)=>`<rect x="14" y="${12+i*16}" width="70" height="5" rx="2.5" fill="#334" /><circle cx="124" cy="${14+i*16}" r="6" fill="none" stroke="#22c55e" stroke-width="2"/><path d="M121 ${14+i*16} l2 2 4 -4" stroke="#22c55e" stroke-width="2" fill="none"/>`).join('')+'</g><g transform="translate(250,34)"><path d="M30 0 L58 10 V32 C58 50 44 58 30 64 C16 58 2 50 2 32 V10 Z" fill="#8b5cf6" opacity="0.18" stroke="#8b5cf6" stroke-width="1.5"/><path d="M18 32 l9 9 18 -20" stroke="#8b5cf6" stroke-width="3" fill="none" stroke-linecap="round"/></g>'},
+    health:{c:'#f43f5e',svg:'<rect width="400" height="120" fill="#1a0e1a"/><path d="M0 70 H120 l14 -34 16 60 14 -40 12 22 H400" fill="none" stroke="#f43f5e" stroke-width="2.5" opacity="0.85"/><g opacity="0.5" fill="#f43f5e">'+[60,300,340,90,260].map((x,i)=>`<circle cx="${x}" cy="${30+i*15}" r="4"/>`).join('')+'</g><text x="20" y="34" font-family="monospace" font-size="12" fill="#f43f5e" opacity="0.8">● LIVE FEED</text>'},
+    tools:{c:'#f59e0b',svg:'<rect width="400" height="120" fill="#1a160b"/><rect x="40" y="24" width="320" height="72" rx="8" fill="#0f1f3d" stroke="#f59e0b" stroke-width="1.2" opacity="0.6"/><g font-family="monospace" font-size="13" fill="#f59e0b" opacity="0.85"><text x="58" y="50">&gt;_ run()</text><text x="58" y="72" fill="#94a3b8">{ data, parse }</text></g><text x="300" y="62" font-family="monospace" font-size="26" fill="#f59e0b" opacity="0.4">&lt;/&gt;</text>'}
+  };
+  const catOf=card=>{
+    const fc=card.closest('section')?.id;
+    if(card.classList.contains('feat-card')){return card.querySelector('.feat-badge')?.textContent.match(/health/i)?'health':'imaging';}
+    const g=card.closest('.group');
+    if(g){const ic=g.querySelector('.group-icon');if(ic){if(ic.classList.contains('ic-imaging'))return'imaging';if(ic.classList.contains('ic-quality'))return'quality';if(ic.classList.contains('ic-health'))return'health';}}
+    return 'tools';
+  };
+  document.querySelectorAll('.card, .feat-card').forEach(card=>{
+    const t=T[catOf(card)];if(!t)return;
+    const wrap=document.createElement('div');wrap.className='card-thumb';wrap.setAttribute('aria-hidden','true');
+    wrap.innerHTML='<svg viewBox="0 0 400 120" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">'+t.svg+'</svg>';
+    card.insertBefore(wrap,card.firstChild);
+  });
+})();
+
 // scroll reveal
 const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});
 document.querySelectorAll('.reveal').forEach(el=>io.observe(el));

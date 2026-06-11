@@ -1,0 +1,70 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI, -apple-system, Helvetica, Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0a1628"/>
+      <stop offset="1" stop-color="#0c1a30"/>
+    </linearGradient>
+    <linearGradient id="grad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#00d4aa"/>
+      <stop offset="1" stop-color="#8b5cf6"/>
+    </linearGradient>
+    <radialGradient id="glowA" cx="0.15" cy="0.1" r="0.5">
+      <stop offset="0" stop-color="#00d4aa" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#00d4aa" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowB" cx="0.9" cy="1" r="0.55">
+      <stop offset="0" stop-color="#8b5cf6" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#8b5cf6" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#glowA)"/>
+  <rect width="1200" height="630" fill="url(#glowB)"/>
+  <rect x="2" y="2" width="1196" height="626" rx="0" fill="none" stroke="#1e3a5f" stroke-width="2"/>
+
+  <!-- brand mark -->
+  <g transform="translate(80,72)">
+    <rect width="64" height="64" rx="16" fill="#0f1f3d" stroke="#00d4aa" stroke-opacity="0.4" stroke-width="1.5"/>
+    <text x="32" y="42" text-anchor="middle" font-size="26" font-weight="800" fill="#00d4aa">LS</text>
+    <text x="84" y="27" font-size="24" font-weight="700" fill="#e2e8f0">LSaiko</text>
+    <text x="84" y="52" font-size="16" font-weight="500" fill="#64748b">Medical AI · Regulatory Quality</text>
+  </g>
+
+  <!-- badge -->
+  <g transform="translate(80,210)">
+    <rect width="430" height="42" rx="21" fill="#00d4aa" fill-opacity="0.12" stroke="#00d4aa" stroke-opacity="0.3"/>
+    <circle cx="26" cy="21" r="5" fill="#00d4aa"/>
+    <text x="44" y="27" font-size="15" font-weight="600" letter-spacing="1" fill="#00d4aa">13 OPEN-SOURCE PROJECTS · PYTHON &amp; DEEP LEARNING</text>
+  </g>
+
+  <!-- headline -->
+  <text x="80" y="330" font-size="62" font-weight="800" fill="#e2e8f0" letter-spacing="-2">Medical AI that ships</text>
+  <text x="80" y="404" font-size="62" font-weight="800" fill="url(#grad)" letter-spacing="-2">with the paperwork to prove it</text>
+
+  <!-- subhead -->
+  <text x="80" y="462" font-size="22" fill="#94a3b8">Clinical imaging models with explainability · FDA / ISO validation tooling · CDC disease surveillance</text>
+
+  <!-- stat chips -->
+  <g transform="translate(80,512)" font-weight="800">
+    <g>
+      <text x="0" y="34" font-size="40" fill="url(#grad)">13</text>
+      <text x="0" y="62" font-size="15" font-weight="500" fill="#94a3b8">Repositories</text>
+    </g>
+    <g transform="translate(150,0)">
+      <text x="0" y="34" font-size="40" fill="url(#grad)">5</text>
+      <text x="0" y="62" font-size="15" font-weight="500" fill="#94a3b8">Imaging models</text>
+    </g>
+    <g transform="translate(330,0)">
+      <text x="0" y="34" font-size="40" fill="url(#grad)">5</text>
+      <text x="0" y="62" font-size="15" font-weight="500" fill="#94a3b8">Quality tools</text>
+    </g>
+    <g transform="translate(500,0)">
+      <text x="0" y="34" font-size="40" fill="url(#grad)">22</text>
+      <text x="0" y="62" font-size="15" font-weight="500" fill="#94a3b8">Diseases tracked</text>
+    </g>
+  </g>
+
+  <!-- url -->
+  <text x="1120" y="588" text-anchor="end" font-size="17" font-weight="600" fill="#00d4aa">lsaiko.github.io</text>
+</svg>
