@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LSaiko — Medical AI & Regulatory Quality Engineering</title>
+<meta name="description" content="Portfolio of LSaiko: medical imaging AI, FDA/IEC-compliant SaMD validation tooling, manufacturing quality engineering, and public-health surveillance. 13 open-source projects." />
+<meta property="og:title" content="LSaiko — Medical AI & Regulatory Quality" />
+<meta property="og:description" content="Medical imaging deep learning, FDA/ISO compliance tooling, and real-time disease surveillance — 13 open-source projects in one place." />
+<meta property="og:type" content="website" />
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0a1628; --navy-light:#0f1f3d; --navy-2:#0c1a30; --border:#1e3a5f;
+  --teal:#00d4aa; --teal-dim:rgba(0,212,170,.12);
+  --violet:#8b5cf6; --violet-dim:rgba(139,92,246,.12);
+  --amber:#f59e0b; --rose:#f43f5e; --success:#22c55e;
+  --muted:#64748b; --text:#e2e8f0; --text-dim:#94a3b8;
+}
+html{scroll-behavior:smooth}
+body{background:var(--navy);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.6;overflow-x:hidden}
+
+/* aurora background */
+.aurora{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.aurora::before,.aurora::after{content:"";position:absolute;width:60vw;height:60vw;border-radius:50%;filter:blur(120px);opacity:.18}
+.aurora::before{background:var(--teal);top:-20%;left:-10%;animation:float1 18s ease-in-out infinite}
+.aurora::after{background:var(--violet);bottom:-25%;right:-10%;animation:float2 22s ease-in-out infinite}
+@keyframes float1{0%,100%{transform:translate(0,0)}50%{transform:translate(8%,12%)}}
+@keyframes float2{0%,100%{transform:translate(0,0)}50%{transform:translate(-8%,-10%)}}
+
+/* nav */
+nav{position:sticky;top:0;z-index:100;background:rgba(10,22,40,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);padding:.85rem 2rem;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:.7rem;text-decoration:none}
+.brand-mark{width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,var(--teal-dim),var(--violet-dim));border:1px solid rgba(0,212,170,.3);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--teal);font-size:1rem}
+.brand-name{font-size:1.05rem;font-weight:700;letter-spacing:-.02em}
+.brand-sub{font-size:.7rem;color:var(--muted);display:block}
+.nav-links{display:flex;gap:1.5rem;align-items:center}
+.nav-links a{color:var(--text-dim);text-decoration:none;font-size:.85rem;font-weight:500;transition:color .2s}
+.nav-links a:hover{color:var(--teal)}
+.nav-gh{display:inline-flex;align-items:center;gap:.4rem;border:1px solid var(--border);border-radius:9px;padding:.45rem .9rem;color:var(--text)!important;font-weight:600}
+.nav-gh:hover{border-color:var(--teal)}
+@media(max-width:760px){.nav-links a:not(.nav-gh){display:none}}
+
+/* hero */
+.hero{max-width:980px;margin:0 auto;padding:6.5rem 2rem 4rem;text-align:center}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:var(--teal-dim);border:1px solid rgba(0,212,170,.25);border-radius:9999px;padding:.35rem 1rem;font-size:.76rem;color:var(--teal);font-weight:600;margin-bottom:1.8rem;letter-spacing:.04em;text-transform:uppercase}
+.pulse{width:7px;height:7px;border-radius:50%;background:var(--teal);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(0,212,170,.5)}50%{opacity:.5;box-shadow:0 0 0 6px rgba(0,212,170,0)}}
+h1{font-size:clamp(2.3rem,5.5vw,4rem);font-weight:800;letter-spacing:-.03em;line-height:1.08;margin-bottom:1.4rem}
+.grad{background:linear-gradient(120deg,var(--teal),var(--violet));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero-sub{font-size:1.18rem;color:var(--text-dim);max-width:660px;margin:0 auto 2.5rem;line-height:1.7}
+.hero-cta{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:.5rem;font-weight:700;font-size:.95rem;padding:.85rem 1.8rem;border-radius:11px;text-decoration:none;transition:transform .15s,opacity .2s,border-color .2s,background .2s}
+.btn:active{transform:translateY(1px)}
+.btn-primary{background:var(--teal);color:var(--navy)}
+.btn-primary:hover{opacity:.9}
+.btn-ghost{border:1px solid var(--border);color:var(--text-dim)}
+.btn-ghost:hover{border-color:var(--teal);color:var(--text)}
+
+/* stat strip */
+.strip{border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:rgba(15,31,61,.5);padding:1.8rem 2rem}
+.strip-inner{max-width:980px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1.5rem;text-align:center}
+.stat-val{font-size:2.1rem;font-weight:800;background:linear-gradient(120deg,var(--teal),var(--violet));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-variant-numeric:tabular-nums}
+.stat-label{font-size:.76rem;color:var(--text-dim);margin-top:.15rem}
+.live-status{max-width:980px;margin:1.2rem auto 0;text-align:center;font-size:.74rem;color:var(--muted);display:flex;align-items:center;justify-content:center;gap:.45rem}
+.live-status .dot-live{width:7px;height:7px;border-radius:50%;background:var(--muted)}
+.live-status.ok .dot-live{background:var(--success);animation:pulse 2s infinite}
+.live-status.err .dot-live{background:var(--amber)}
+.card-meta{display:flex;align-items:center;gap:.9rem;margin-top:.75rem;font-size:.72rem;color:var(--muted);min-height:1rem}
+.card-meta span{display:inline-flex;align-items:center;gap:.3rem}
+.card-meta svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:1.8}
+.card-meta .star-on{color:var(--amber)}
+
+/* sections */
+section{max-width:1080px;margin:0 auto;padding:4.5rem 2rem}
+.sec-label{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--teal);margin-bottom:.7rem}
+h2{font-size:clamp(1.6rem,3vw,2.3rem);font-weight:800;letter-spacing:-.02em;margin-bottom:.8rem}
+.sec-sub{color:var(--text-dim);font-size:1.02rem;max-width:640px;margin-bottom:2.5rem;line-height:1.7}
+
+/* project group */
+.group{margin-bottom:3.5rem}
+.group-head{display:flex;align-items:center;gap:.7rem;margin-bottom:1.4rem}
+.group-icon{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.group-icon svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.6}
+.group-title{font-size:1.15rem;font-weight:700}
+.group-count{font-size:.74rem;color:var(--muted);font-weight:500}
+.ic-imaging{background:var(--teal-dim);border:1px solid rgba(0,212,170,.25);color:var(--teal)}
+.ic-quality{background:var(--violet-dim);border:1px solid rgba(139,92,246,.25);color:var(--violet)}
+.ic-health{background:rgba(244,63,94,.1);border:1px solid rgba(244,63,94,.25);color:var(--rose)}
+.ic-tools{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.25);color:var(--amber)}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.1rem}
+.card{position:relative;background:var(--navy-light);border:1px solid var(--border);border-radius:15px;padding:1.4rem;text-decoration:none;color:inherit;display:flex;flex-direction:column;transition:transform .18s,border-color .18s,box-shadow .18s;overflow:hidden}
+.card::after{content:"";position:absolute;inset:0;border-radius:15px;background:radial-gradient(400px circle at var(--mx,50%) var(--my,0%),rgba(0,212,170,.06),transparent 40%);opacity:0;transition:opacity .3s}
+.card:hover{transform:translateY(-3px);border-color:rgba(0,212,170,.4);box-shadow:0 12px 30px -12px rgba(0,0,0,.5)}
+.card:hover::after{opacity:1}
+.card-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:.7rem}
+.card-name{font-size:1rem;font-weight:700;letter-spacing:-.01em}
+.lang{font-size:.68rem;font-weight:600;color:var(--text-dim);display:inline-flex;align-items:center;gap:.35rem}
+.lang .dot{width:8px;height:8px;border-radius:50%}
+.dot-py{background:#3b82f6}.dot-html{background:#e34c26}
+.card-desc{font-size:.85rem;color:var(--text-dim);line-height:1.6;flex:1}
+.card-tags{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:1rem}
+.chip{font-size:.66rem;font-weight:600;padding:.2rem .55rem;border-radius:6px;background:rgba(30,58,95,.6);color:var(--text-dim);border:1px solid var(--border)}
+.card-link{margin-top:.9rem;font-size:.78rem;font-weight:600;color:var(--teal);display:inline-flex;align-items:center;gap:.35rem}
+
+/* featured */
+.featured{display:grid;grid-template-columns:1.3fr 1fr;gap:1.2rem;margin-bottom:1.1rem}
+@media(max-width:780px){.featured{grid-template-columns:1fr}}
+.feat-card{background:linear-gradient(150deg,var(--navy-light),var(--navy-2));border:1px solid var(--border);border-radius:18px;padding:1.8rem;text-decoration:none;color:inherit;transition:border-color .2s,transform .18s}
+.feat-card:hover{border-color:rgba(0,212,170,.4);transform:translateY(-2px)}
+.feat-badge{display:inline-flex;align-items:center;gap:.4rem;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--teal);margin-bottom:.8rem}
+.feat-title{font-size:1.4rem;font-weight:800;margin-bottom:.5rem;letter-spacing:-.02em}
+.feat-desc{font-size:.9rem;color:var(--text-dim);line-height:1.65;margin-bottom:1rem}
+
+/* about / disclaimer */
+.about{background:rgba(15,31,61,.4);border:1px solid var(--border);border-radius:18px;padding:2rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem}
+.about h3{font-size:.95rem;font-weight:700;margin-bottom:.5rem;color:var(--teal)}
+.about p{font-size:.86rem;color:var(--text-dim);line-height:1.65}
+.note{margin-top:2rem;font-size:.8rem;color:var(--muted);background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.2);border-radius:10px;padding:1rem 1.2rem;line-height:1.6}
+
+footer{border-top:1px solid var(--border);padding:2.5rem 2rem;text-align:center}
+footer p{font-size:.82rem;color:var(--muted)}
+footer a{color:var(--teal);text-decoration:none}
+footer a:hover{text-decoration:underline}
+
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease,transform .6s ease}
+.reveal.in{opacity:1;transform:none}
+@media(max-width:600px){nav{padding:.7rem 1rem}.hero{padding:4rem 1.2rem 3rem}section{padding:3rem 1.2rem}}
+</style>
+</head>
+<body>
+<div class="aurora"></div>
+
+<nav>
+  <a class="brand" href="#top">
+    <div class="brand-mark">LS</div>
+    <div>
+      <span class="brand-name">LSaiko</span>
+      <span class="brand-sub">Medical AI · Regulatory Quality</span>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a href="#imaging">Imaging AI</a>
+    <a href="#quality">Quality &amp; Compliance</a>
+    <a href="#health">Public Health</a>
+    <a class="nav-gh" href="https://github.com/LSaiko" target="_blank" rel="noreferrer">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+      GitHub
+    </a>
+  </div>
+</nav>
+
+<div class="hero" id="top">
+  <div class="hero-badge"><span class="pulse"></span>13 open-source projects · Python &amp; deep learning</div>
+  <h1>Medical AI that ships<br/><span class="grad">with the paperwork to prove it</span></h1>
+  <p class="hero-sub">
+    I build deep-learning systems for clinical imaging and the FDA/ISO validation tooling that gets them
+    audit-ready — from chest X-ray and melanoma classifiers with explainability, to SaMD validation kits,
+    pFMEA generators, and a public CDC disease-surveillance dashboard.
+  </p>
+  <div class="hero-cta">
+    <a class="btn btn-primary" href="#imaging">
+      Explore the work
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+    <a class="btn btn-ghost" href="https://github.com/LSaiko" target="_blank" rel="noreferrer">View GitHub profile</a>
+  </div>
+</div>
+
+<div class="strip">
+  <div class="strip-inner">
+    <div><div class="stat-val" id="stat-repos">13</div><div class="stat-label">Public repositories</div></div>
+    <div><div class="stat-val">5</div><div class="stat-label">Medical imaging models</div></div>
+    <div><div class="stat-val">5</div><div class="stat-label">FDA / ISO quality tools</div></div>
+    <div><div class="stat-val" id="stat-stars">★</div><div class="stat-label">Total GitHub stars</div></div>
+    <div><div class="stat-val" id="stat-langs">Py</div><div class="stat-label">Primary language</div></div>
+  </div>
+  <div id="live-status" class="live-status">Loading live data from GitHub…</div>
+</div>
+
+<!-- FEATURED -->
+<section id="featured">
+  <p class="sec-label">Featured</p>
+  <h2>Two flagship projects</h2>
+  <p class="sec-sub">The clearest expression of the portfolio's two halves — a clinical imaging model with explainability, and a live, public-facing data product.</p>
+  <div class="featured">
+    <a class="feat-card reveal" href="https://github.com/LSaiko/thoravis" target="_blank" rel="noreferrer">
+      <div class="feat-badge">● Clinical Imaging AI</div>
+      <div class="feat-title">thoravis</div>
+      <div class="feat-desc">Multi-label chest X-ray classifier on the 15-class NIH ChestX-ray14 dataset. ViT-B/16 backbone, OpenCV CLAHE preprocessing, and Grad-CAM heatmaps so every prediction comes with a visual explanation a radiologist can sanity-check.</div>
+      <div class="card-tags"><span class="chip">PyTorch</span><span class="chip">HuggingFace</span><span class="chip">ViT-B/16</span><span class="chip">Grad-CAM</span><span class="chip">15 classes</span></div>
+    </a>
+    <a class="feat-card reveal" href="https://github.com/LSaiko/contagionwatcher" target="_blank" rel="noreferrer">
+      <div class="feat-badge">● Public Health</div>
+      <div class="feat-title">ContagionWatcher</div>
+      <div class="feat-desc">Real-time U.S. disease surveillance dashboard powered by live CDC NNDSS data — 22 notifiable diseases, all 50 states, period filters, trend calculation, and daily AI situation reports. Free, no login.</div>
+      <div class="card-tags"><span class="chip">CDC NNDSS</span><span class="chip">Claude AI</span><span class="chip">Live data</span><span class="chip">No login</span></div>
+    </a>
+  </div>
+</section>
+
+<!-- IMAGING -->
+<section id="imaging">
+  <div class="group">
+    <div class="group-head">
+      <div class="group-icon ic-imaging"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M3.75 21h16.5a1.5 1.5 0 001.5-1.5V4.5a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 4.5v15a1.5 1.5 0 001.5 1.5z"/></svg></div>
+      <div>
+        <div class="group-title">Medical Imaging &amp; Deep Learning</div>
+        <div class="group-count">5 projects · clinical computer vision with explainability</div>
+      </div>
+    </div>
+    <div class="cards">
+      <a class="card reveal" href="https://github.com/LSaiko/thoravis" target="_blank" rel="noreferrer">
+        <div class="card-top"><span class="card-name">thoravis</span><span class="lang"><span class="dot dot-py"></span>Python</span></div>
+        <div class="card-desc">Multi-label chest X-ray classifier. ViT-B/16 backbone, CLAHE preprocessing, Grad-CAM heatmaps over the 15-class NIH ChestX-ray14 dataset.</div>
+        <div class="card-tags"><span class="chip">PyTorch</span><span class="chip">ViT</span><span class="chip">Grad-CAM</span></div>
+        <span class="card-link">View repo →</span>
+      </a>
+      <a class="card reveal" href="https://github.com/LSaiko/Melanoma-Skin-Classifier" target="_blank" rel="noreferrer">
+        <div class="card-top"><span class="card-name">Melanoma-Skin-Classifier</span><span class="lang"><span class="dot dot-py"></span>Python</span></div>
+        <div class="card-desc">ResNet-18 melanoma classifier on HAM10000 with Grad-CAM heatmaps, lesion bounding boxes, and per-prediction confidence percentages.</div>
+        <div class="card-tags"><span class="chip">ResNet-18</span><span class="chip">HAM10000</span><span class="chip">XAI</span></div>
+        <span class="card-link">View repo →</span>
+      </a>
+      <a class="card reveal" href="https://github.com/LSaiko/xray-gradcam" target="_blank" rel="noreferrer">
+        <div class="card-top"><span class="card-name">xray-gradcam</span><span class="lang"><span class="dot dot-py"></span>Python</span></div>
+        <div class="card-desc">Grad-CAM explainability tooling for chest X-ray pneumonia detection — visualizing the regions driving each model decision.</div>
+        <div class="card-tags"><span class="chip">Grad-CAM</span><span class="chip">Pneumonia</span></div>
+        <span class="card-link">View repo →</span>
+      </a>
+      <a class="card reveal" href="https://github.com/LSaiko/polyp_segmentation" target="_blank" rel="noreferrer">
+        <div class="card-top"><span class="card-name">polyp_segmentation</span><span class="lang"><span class="dot dot-py"></span>Python</span></div>
+        <div class="card-desc">LightUNet experimentation for colonoscopy polyp segmentation — a lightweight architecture for pixel-level detection.</div>
+        <div class="card-tags"><span class="chip">LightUNet</span><span class="chip">Segmentation</span></div>
+        <span class="card-link">View repo →</span>
+      </a>
+      <a class="card reveal" href="https://github.com/LSaiko/Opti-TracT" target="_blank" rel="noreferrer">
+        <div class="card-top"><span class="card-name">Opti-TracT</span><span class="lang"><span class="dot dot-py"></span>Python</span></div>
+        <div class="card-desc">Real-time laparoscopic surgical instrument detection and tracking using YOLOv8s paired with ByteTracker.</div>
+        <div class="card-tags"><span class="chip">YOLOv8s</span><span class="chip">ByteTrack</span><span class="chip">Real-time</span></div>
+        <span class="card-link">View repo →</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- QUALITY -->
+  <div class="group" id="quality">
+    <div class="group-head">
+      <div class="group-icon ic-quality"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+      <div>
+        <div class="group-title">Regulatory &amp; Quality Engineering</div>
+        <div class="group-count">5 projects · FDA 21 CFR 820 · ISO 13485 · IEC 62304 tooling</div>
+      </div>
+    </div>
+    <div class="cards">
+      <a class="card reveal" href="https://github.com/LSaiko/SaMD-Val-Kit" target="_blank" rel="noreferrer">
+        <div class="card-top"><span class="card-name">SaMD-Val-Kit</span><span class="lang"><span class="dot dot-py"></span>Python</span></div>
+        <div class="card-desc">Generates FDA/IEC-compliant Software-as-a-Medical-Device validation packages: IQ/OQ/PQ protocols, ISO 14971 risk management, IEC 62304 lifecycle, SBOM, and cybersecurity checklists.</div>
+        <div class="card-tags"><span class="chip">IEC 62304</span><span class="chip">ISO 14971</span><span class="chip">IQ/OQ/PQ</span></div>
+        <span class="card-link">View repo →</span>
+      </a>
+      <a class="card reveal" href="https://github.com/LSaiko/sop-review-tool" target="_blank" rel="noreferrer">
+        <div class="card-top"><span class="card-name">sop-review-tool</span><span class="lang"><span class="dot dot-py"></span>Python</span></div>
+        <div class="card-desc">AI-powered 21 CFR 820 SOP compliance reviewer (Claude). Preliminary gap analysis for medical-device QMS documents — human review required to finalize.</div>
+        <div class="card-tags"><span class="chip">21 CFR 820</span><span class="chip">Claude</span><span class="chip">QMS</span></div>
+        <span class="card-link">View repo →</span>
+      </a>
+      <a class="card reveal" href="https://github.com/LSaiko/pfmea-template" target="_blank" rel="noreferrer">
+        <div class="card-top"><span class="card-name">pfmea-template</span><span class="lang"><span class="dot dot-py"></span>Python</span></div>
+        <div class="card-desc">AIAG-VDA 2019 pFMEA generator suite across 3 device scenarios (CNC machining, injection molding, sterile packaging). Python + openpyxl, mapped to ISO 13485 / ISO 11607.</div>
+        <div class="card-tags"><span class="chip">AIAG-VDA</span><span class="chip">ISO 11607</span><span class="chip">openpyxl</span></div>
+        <span class="card-link">View repo →</span>
+      </a>
+      <a class="card reveal" href="https://github.com/LSaiko/grr-analysis-tool" target="_blank" rel="noreferrer">
+        <div class="card-top"><span class="card-name">grr-analysis-tool</span><span class="lang"><span class="dot dot-py"></span>Python</span></div>
+        <div class="card-desc">AIAG MSA 4th Edition Gauge R&amp;R analysis for manufacturing quality engineering, generating PDF reports for 21 CFR 820.72 compliance.</div>
+        <div class="card-tags"><span class="chip">Gauge R&amp;R</span><span class="chip">MSA</span><span class="chip">PDF report</span></div>
+        <span class="card-link">View repo →</span>
+      </a>
+      <a class="card reveal" href="https://github.com/LSaiko/transfer-readiness-dashboard" target="_blank" rel="noreferrer">
+        <div class="card-top"><span class="card-name">transfer-readiness-dashboard</span><span class="lang"><span class="dot dot-py"></span>Python</span></div>
+        <div class="card-desc">GMP-formatted manufacturing transfer readiness dashboard — 77 SKUs across three categories, tracking 6 weighted quality domains (Validation, Documentation, Gage, Supplier, Training, Regulatory).</div>
+        <div class="card-tags"><span class="chip">GMP</span><span class="chip">Tech transfer</span><span class="chip">Dashboard</span></div>
+        <span class="card-link">View repo →</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- HEALTH + TOOLS -->
+  <div class="group" id="health">
+    <div class="group-head">
+      <div class="group-icon ic-health"><svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/></svg></div>
+      <div>
+        <div class="group-title">Public Health &amp; Utilities</div>
+        <div class="group-count">3 projects · data products and tools</div>
+      </div>
+    </div>
+    <div class="cards">
+      <a class="card reveal" href="https://github.com/LSaiko/contagionwatcher" target="_blank" rel="noreferrer">
+        <div class="card-top"><span class="card-name">contagionwatcher</span><span class="lang"><span class="dot dot-html"></span>HTML</span></div>
+        <div class="card-desc">Real-time U.S. disease surveillance dashboard powered by CDC NNDSS data — 22 notifiable diseases, all 50 states, AI situation reports. Free, no login required.</div>
+        <div class="card-tags"><span class="chip">CDC NNDSS</span><span class="chip">Claude AI</span><span class="chip">Live</span></div>
+        <span class="card-link">View repo →</span>
+      </a>
+      <a class="card reveal" href="https://github.com/LSaiko/Webharvest-Pro" target="_blank" rel="noreferrer">
+        <div class="card-top"><span class="card-name">Webharvest-Pro</span><span class="lang"><span class="dot dot-html"></span>HTML</span></div>
+        <div class="card-desc">A web scraping program built for downstream data analysis workflows.</div>
+        <div class="card-tags"><span class="chip">Scraping</span><span class="chip">Data</span></div>
+        <span class="card-link">View repo →</span>
+      </a>
+      <a class="card reveal" href="https://github.com/LSaiko/rsvp-speed-reader" target="_blank" rel="noreferrer">
+        <div class="card-top"><span class="card-name">rsvp-speed-reader</span><span class="lang"><span class="dot dot-html"></span>HTML</span></div>
+        <div class="card-desc">An RSVP-style speed reading tool that streams text one word at a time to lift reading pace.</div>
+        <div class="card-tags"><span class="chip">RSVP</span><span class="chip">Web</span></div>
+        <span class="card-link">View repo →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <p class="sec-label">About this work</p>
+  <h2>One engineer, two disciplines</h2>
+  <p class="sec-sub">The portfolio sits at an unusual intersection: the deep-learning skill to build clinical models, plus the regulatory fluency to validate them for real-world medical-device use.</p>
+  <div class="about">
+    <div>
+      <h3>Clinical Imaging AI</h3>
+      <p>Classification, segmentation, and tracking across radiology, dermatology, endoscopy, and surgery — consistently paired with explainability (Grad-CAM, bounding boxes, confidence scores) rather than black-box outputs.</p>
+    </div>
+    <div>
+      <h3>Regulatory &amp; Quality</h3>
+      <p>Tooling that targets the standards real medical-device teams answer to: FDA 21 CFR 820, ISO 13485, ISO 14971, IEC 62304, AIAG MSA, and AIAG-VDA pFMEA — turning compliance artifacts into generated, repeatable outputs.</p>
+    </div>
+    <div>
+      <h3>Data &amp; Public Health</h3>
+      <p>Live, source-attributed data products — most prominently a CDC-backed disease surveillance dashboard with AI summaries — built to be free, transparent, and usable without an account.</p>
+    </div>
+  </div>
+  <div class="note">
+    <strong>Note on intended use:</strong> these projects are research, educational, and tooling artifacts. The clinical models are not cleared diagnostic devices, and the compliance generators produce preliminary drafts that require qualified human review before any regulatory submission.
+  </div>
+</section>
+
+<footer>
+  <div style="max-width:980px;margin:0 auto">
+    <p style="font-size:1rem;font-weight:700;color:var(--text);margin-bottom:.4rem">LSaiko</p>
+    <p>Medical AI &amp; regulatory quality engineering · <a href="https://github.com/LSaiko" target="_blank" rel="noreferrer">github.com/LSaiko</a></p>
+    <p style="margin-top:.6rem">*Standards targeted by the quality tooling include FDA 21 CFR 820, ISO 13485, ISO 14971, IEC 62304, AIAG MSA &amp; AIAG-VDA. Descriptions summarized from public repository metadata.</p>
+  </div>
+</footer>
+
+<script>
+// scroll reveal
+const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+// card spotlight
+document.querySelectorAll('.card').forEach(c=>{
+  c.addEventListener('mousemove',e=>{const r=c.getBoundingClientRect();c.style.setProperty('--mx',(e.clientX-r.left)+'px');c.style.setProperty('--my',(e.clientY-r.top)+'px')});
+});
+
+// ── Live GitHub data ───────────────────────────────────────────────────────
+(function(){
+  const USER='LSaiko';
+  const CACHE_KEY='lsaiko_gh_v1', CACHE_TTL=30*60*1000; // 30 min
+  const status=document.getElementById('live-status');
+  const repoFromHref=h=>{const m=h&&h.match(/github\.com\/[^/]+\/([^/?#]+)/i);return m?m[1].toLowerCase():null};
+  const fmt=n=>n>=1000?(n/1000).toFixed(1).replace(/\.0$/,'')+'k':''+n;
+  const ago=d=>{const s=(Date.now()-new Date(d))/1000,u=[[31536000,'y'],[2592000,'mo'],[86400,'d'],[3600,'h'],[60,'m']];for(const[sec,l]of u){if(s>=sec)return Math.floor(s/sec)+l+' ago'}return 'just now'};
+  const starSvg='<svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.5l2.06 4.18 4.61.67-3.34 3.25.79 4.59-4.12-2.17-4.13 2.17.79-4.59L4.8 8.35l4.62-.67z"/></svg>';
+  const clockSvg='<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" d="M12 7v5l3 2"/></svg>';
+
+  function apply(repos){
+    const map={};repos.forEach(r=>map[r.name.toLowerCase()]=r);
+    // stat strip
+    const repoStat=document.getElementById('stat-repos');
+    if(repoStat)repoStat.textContent=repos.length;
+    const totalStars=repos.reduce((s,r)=>s+(r.stargazers_count||0),0);
+    const starStat=document.getElementById('stat-stars');
+    if(starStat)starStat.textContent=fmt(totalStars);
+    const langCount={};repos.forEach(r=>{if(r.language)langCount[r.language]=(langCount[r.language]||0)+1});
+    const topLang=Object.entries(langCount).sort((a,b)=>b[1]-a[1])[0];
+    const langStat=document.getElementById('stat-langs');
+    if(langStat&&topLang)langStat.textContent=topLang[0];
+    // per-card meta
+    document.querySelectorAll('.card, .feat-card').forEach(card=>{
+      const slug=repoFromHref(card.getAttribute('href'));
+      const r=slug&&map[slug];
+      if(!r)return;
+      let meta=card.querySelector('.card-meta');
+      if(!meta){meta=document.createElement('div');meta.className='card-meta';card.appendChild(meta)}
+      meta.innerHTML=
+        '<span class="'+(r.stargazers_count>0?'star-on':'')+'">'+starSvg+fmt(r.stargazers_count)+'</span>'+
+        (r.forks_count?'<span>⑂ '+fmt(r.forks_count)+'</span>':'')+
+        '<span>'+clockSvg+'Updated '+ago(r.pushed_at||r.updated_at)+'</span>';
+    });
+  }
+
+  function ok(ts){status.className='live-status ok';status.innerHTML='<span class="dot-live"></span>Live from GitHub · synced '+ago(ts);}
+  function fail(){status.className='live-status err';status.innerHTML='<span class="dot-live"></span>Showing cached figures — live GitHub data unavailable';}
+
+  // serve cache first
+  try{const c=JSON.parse(localStorage.getItem(CACHE_KEY));if(c&&c.repos){apply(c.repos);ok(c.ts);if(Date.now()-c.ts<CACHE_TTL)return;}}catch(e){}
+
+  fetch('https://api.github.com/users/'+USER+'/repos?per_page=100&sort=updated',{headers:{'Accept':'application/vnd.github+json'}})
+    .then(r=>{if(!r.ok)throw new Error(r.status);return r.json()})
+    .then(repos=>{
+      if(!Array.isArray(repos))throw new Error('bad payload');
+      repos=repos.filter(r=>!r.fork);
+      apply(repos);ok(Date.now());
+      try{localStorage.setItem(CACHE_KEY,JSON.stringify({ts:Date.now(),repos:repos.map(r=>({name:r.name,stargazers_count:r.stargazers_count,forks_count:r.forks_count,language:r.language,pushed_at:r.pushed_at,updated_at:r.updated_at}))}));}catch(e){}
+    })
+    .catch(()=>{if(!status.classList.contains('ok'))fail();});
+})();
+</script>
+</body>
+</html>
