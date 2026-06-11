@@ -164,6 +164,28 @@ footer a:hover{text-decoration:underline}
 .card-thumb svg{display:block;width:100%;height:84px}
 .feat-card .card-thumb{width:calc(100% + 3.6rem);margin:-1.8rem -1.8rem 1.3rem;border-radius:18px 18px 0 0}
 .feat-card .card-thumb svg{height:120px}
+.thumb-label{font-family:monospace;font-size:12px;letter-spacing:.5px}
+/* thumbnail animations (disabled under prefers-reduced-motion via global rule) */
+@keyframes thPulse{0%,100%{opacity:.22}50%{opacity:.8}}
+@keyframes thSweepX{0%{transform:translateX(-70px)}100%{transform:translateX(430px)}}
+@keyframes thSweepY{0%{transform:translateY(-10px)}100%{transform:translateY(86px)}}
+@keyframes thDraw{to{stroke-dashoffset:0}}
+@keyframes thGrow{0%,100%{transform:scaleY(.35)}50%{transform:scaleY(1)}}
+@keyframes thBlink{0%,49%{opacity:1}50%,100%{opacity:.12}}
+@keyframes thNeedle{0%,100%{transform:rotate(-42deg)}50%{transform:rotate(42deg)}}
+@keyframes thTrack{0%{transform:translateX(0)}100%{transform:translateX(210px)}}
+@keyframes thWord{0%,16%{opacity:1}26%,100%{opacity:0}}
+@keyframes thFlow{0%{stroke-dashoffset:60}100%{stroke-dashoffset:0}}
+.th-pulse{animation:thPulse 2.4s ease-in-out infinite}
+.th-sweepx{animation:thSweepX 3s linear infinite}
+.th-sweepy{animation:thSweepY 2.8s ease-in-out infinite}
+.th-draw{stroke-dasharray:7 5;animation:thDraw 5s linear infinite}
+.th-grow{transform-box:fill-box;transform-origin:bottom;animation:thGrow 2.6s ease-in-out infinite}
+.th-blink{animation:thBlink 1.1s steps(1) infinite}
+.th-needle{transform-box:fill-box;transform-origin:bottom center;animation:thNeedle 3.4s ease-in-out infinite}
+.th-track{animation:thTrack 3.2s ease-in-out infinite alternate}
+.th-word{opacity:0;animation:thWord 4.4s linear infinite}
+.th-flow{stroke-dasharray:6 6;animation:thFlow 1s linear infinite}
 
 /* accessibility */
 .skip-link{position:absolute;left:-999px;top:0;z-index:200;background:var(--teal);color:var(--navy);padding:.7rem 1.2rem;border-radius:0 0 10px 0;font-weight:700;font-size:.85rem}
@@ -406,25 +428,53 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--teal);outline-offse
 </footer>
 
 <script>
-// ── Card thumbnails (themed SVG banners by category) ───────────────────────
+// ── Card thumbnails (accurate, animated per-repo motifs) ───────────────────
 (function(){
-  const T={
-    imaging:{c:'#00d4aa',svg:'<rect width="400" height="120" fill="#0b1c33"/><g stroke="#1e3a5f" stroke-width="1">'+Array.from({length:9},(_,i)=>`<line x1="${i*50}" y1="0" x2="${i*50}" y2="120"/>`).join('')+Array.from({length:3},(_,i)=>`<line x1="0" y1="${i*40+20}" x2="400" y2="${i*40+20}"/>`).join('')+'</g><ellipse cx="150" cy="60" rx="70" ry="42" fill="#00d4aa" opacity="0.18"/><ellipse cx="150" cy="60" rx="40" ry="24" fill="#00d4aa" opacity="0.28"/><ellipse cx="150" cy="60" rx="16" ry="11" fill="#f59e0b" opacity="0.7"/><rect x="250" y="30" width="110" height="60" rx="6" fill="none" stroke="#00d4aa" stroke-width="2" opacity="0.6"/><text x="305" y="66" text-anchor="middle" font-family="monospace" font-size="13" fill="#00d4aa">Grad-CAM</text>'},
-    quality:{c:'#8b5cf6',svg:'<rect width="400" height="120" fill="#0d1830"/><g transform="translate(40,28)"><rect width="150" height="64" rx="6" fill="#0f1f3d" stroke="#8b5cf6" stroke-width="1.5" opacity="0.6"/>'+Array.from({length:3},(_,i)=>`<rect x="14" y="${12+i*16}" width="70" height="5" rx="2.5" fill="#334" /><circle cx="124" cy="${14+i*16}" r="6" fill="none" stroke="#22c55e" stroke-width="2"/><path d="M121 ${14+i*16} l2 2 4 -4" stroke="#22c55e" stroke-width="2" fill="none"/>`).join('')+'</g><g transform="translate(250,34)"><path d="M30 0 L58 10 V32 C58 50 44 58 30 64 C16 58 2 50 2 32 V10 Z" fill="#8b5cf6" opacity="0.18" stroke="#8b5cf6" stroke-width="1.5"/><path d="M18 32 l9 9 18 -20" stroke="#8b5cf6" stroke-width="3" fill="none" stroke-linecap="round"/></g>'},
-    health:{c:'#f43f5e',svg:'<rect width="400" height="120" fill="#1a0e1a"/><path d="M0 70 H120 l14 -34 16 60 14 -40 12 22 H400" fill="none" stroke="#f43f5e" stroke-width="2.5" opacity="0.85"/><g opacity="0.5" fill="#f43f5e">'+[60,300,340,90,260].map((x,i)=>`<circle cx="${x}" cy="${30+i*15}" r="4"/>`).join('')+'</g><text x="20" y="34" font-family="monospace" font-size="12" fill="#f43f5e" opacity="0.8">● LIVE FEED</text>'},
-    tools:{c:'#f59e0b',svg:'<rect width="400" height="120" fill="#1a160b"/><rect x="40" y="24" width="320" height="72" rx="8" fill="#0f1f3d" stroke="#f59e0b" stroke-width="1.2" opacity="0.6"/><g font-family="monospace" font-size="13" fill="#f59e0b" opacity="0.85"><text x="58" y="50">&gt;_ run()</text><text x="58" y="72" fill="#94a3b8">{ data, parse }</text></g><text x="300" y="62" font-family="monospace" font-size="26" fill="#f59e0b" opacity="0.4">&lt;/&gt;</text>'}
+  const lbl=(x,c,t)=>`<text class="thumb-label" x="${x}" y="108" fill="${c}">${t}</text>`;
+  const grid=(c)=>'<g stroke="'+c+'" stroke-width="1" opacity="0.55">'+Array.from({length:9},(_,i)=>`<line x1="${i*50}" y1="0" x2="${i*50}" y2="120"/>`).join('')+Array.from({length:3},(_,i)=>`<line x1="0" y1="${i*36+18}" x2="400" y2="${i*36+18}"/>`).join('')+'</g>';
+
+  // Each motif reflects what the repo ACTUALLY does.
+  const REPO={
+    // ── Imaging ──
+    // Multi-label chest X-ray WITH Grad-CAM heatmaps
+    'thoravis':()=>'<rect width="400" height="120" fill="#0b1c33"/>'+grid('#1e3a5f')+'<g class="th-pulse"><ellipse cx="150" cy="58" rx="66" ry="40" fill="#00d4aa" opacity="0.16"/><ellipse cx="150" cy="58" rx="38" ry="23" fill="#f59e0b" opacity="0.45"/><ellipse cx="150" cy="58" rx="15" ry="10" fill="#ef4444" opacity="0.7"/></g><rect x="248" y="26" width="118" height="56" rx="6" fill="none" stroke="#00d4aa" stroke-width="1.5" opacity="0.55"/>'+lbl(20,'#00d4aa','Grad-CAM · ViT-B/16'),
+    // ResNet melanoma WITH Grad-CAM + bounding box
+    'melanoma-skin-classifier':()=>'<rect width="400" height="120" fill="#2a1a14"/><ellipse cx="200" cy="56" rx="150" ry="46" fill="#d8a878" opacity="0.18"/><ellipse cx="150" cy="54" rx="34" ry="26" fill="#4a2e22"/><ellipse cx="150" cy="54" rx="20" ry="15" class="th-pulse" fill="#ef4444" opacity="0.55"/><rect x="110" y="26" width="80" height="56" rx="3" fill="none" stroke="#22c55e" stroke-width="2" class="th-draw"/>'+lbl(20,'#f59e0b','ResNet-18 · Grad-CAM · BBox'),
+    // Grad-CAM pneumonia
+    'xray-gradcam':()=>'<rect width="400" height="120" fill="#0b1c33"/>'+grid('#1e3a5f')+'<g class="th-pulse"><ellipse cx="130" cy="60" rx="34" ry="40" fill="#f59e0b" opacity="0.4"/><ellipse cx="210" cy="60" rx="34" ry="40" fill="#ef4444" opacity="0.5"/></g>'+lbl(20,'#00d4aa','Grad-CAM · Pneumonia'),
+    // LightUNet segmentation — NO Grad-CAM, show animated contour mask
+    'polyp_segmentation':()=>'<rect width="400" height="120" fill="#10130b"/><circle cx="200" cy="60" r="58" fill="#1a2410" opacity="0.7"/><path d="M170 64 C168 40 198 32 214 44 C236 40 244 70 224 82 C214 96 178 92 172 76 Z" fill="#84cc16" opacity="0.12" stroke="#84cc16" stroke-width="2" class="th-draw"/>'+lbl(20,'#84cc16','LightUNet · Segmentation'),
+    // YOLO + ByteTrack — NO Grad-CAM, show moving tracked box
+    'opti-tract':()=>'<rect width="400" height="120" fill="#0c1726"/>'+grid('#1e3a5f')+'<path d="M70 80 L150 50 L230 66" fill="none" stroke="#38bdf8" stroke-width="1.5" stroke-dasharray="3 4" opacity="0.6"/><g class="th-track"><rect x="60" y="40" width="52" height="40" rx="3" fill="#38bdf8" opacity="0.1" stroke="#38bdf8" stroke-width="2"/><text class="thumb-label" x="63" y="36" fill="#38bdf8">ID:1 0.94</text></g>'+lbl(20,'#38bdf8','YOLOv8s · ByteTrack'),
+
+    // ── Quality / Regulatory ──
+    // SaMD validation packages → doc stack + sequential checks
+    'samd-val-kit':()=>'<rect width="400" height="120" fill="#100d1f"/><g transform="translate(46,26)"><rect width="150" height="68" rx="6" fill="#0f1f3d" stroke="#8b5cf6" stroke-width="1.4" opacity="0.7"/>'+[0,1,2].map(i=>`<rect x="14" y="${13+i*17}" width="78" height="5" rx="2.5" fill="#3a3a55"/><g class="th-pulse" style="animation-delay:${i*0.5}s"><circle cx="126" cy="${15+i*17}" r="6.5" fill="none" stroke="#22c55e" stroke-width="2"/><path d="M122.5 ${15+i*17} l2.5 2.5 4.5 -5" stroke="#22c55e" stroke-width="2" fill="none"/></g>`).join('')+'</g>'+lbl(230,'#8b5cf6','IQ / OQ / PQ · 62304'),
+    // SOP AI review → document with scanning line
+    'sop-review-tool':()=>'<rect width="400" height="120" fill="#100d1f"/><g transform="translate(130,18)"><rect width="140" height="84" rx="5" fill="#0f1f3d" stroke="#8b5cf6" stroke-width="1.3" opacity="0.7"/>'+[0,1,2,3].map(i=>`<rect x="16" y="${14+i*16}" width="${108-i*12}" height="4" rx="2" fill="#3a3a55"/>`).join('')+'<rect x="0" y="0" width="140" height="3" fill="#00d4aa" class="th-sweepy" opacity="0.9"/></g>'+lbl(20,'#8b5cf6','AI Review · 21 CFR 820'),
+    // pFMEA generator → spreadsheet cells filling
+    'pfmea-template':()=>'<rect width="400" height="120" fill="#100d1f"/><g transform="translate(70,22)">'+Array.from({length:24},(_,i)=>{const c=i%6,r=(i-c)/6;return `<rect x="${c*42}" y="${r*22}" width="40" height="20" fill="#8b5cf6" class="th-pulse" style="animation-delay:${(i%6)*0.25+r*0.15}s" opacity="0.5"/>`}).join('')+'</g>'+lbl(20,'#8b5cf6','AIAG-VDA pFMEA · openpyxl'),
+    // Gauge R&R → dial + sweeping needle
+    'grr-analysis-tool':()=>'<rect width="400" height="120" fill="#100d1f"/><g transform="translate(200,86)"><path d="M-58 0 A58 58 0 0 1 58 0" fill="none" stroke="#8b5cf6" stroke-width="3" opacity="0.6"/>'+[-42,-21,0,21,42].map(a=>`<line x1="0" y1="-50" x2="0" y2="-58" stroke="#8b5cf6" stroke-width="2" transform="rotate(${a})" opacity="0.6"/>`).join('')+'<line x1="0" y1="6" x2="0" y2="-48" stroke="#00d4aa" stroke-width="3" class="th-needle" stroke-linecap="round"/><circle r="5" fill="#00d4aa"/></g>'+lbl(20,'#8b5cf6','Gauge R&amp;R · MSA-4'),
+    // Transfer readiness dashboard → growing bars
+    'transfer-readiness-dashboard':()=>'<rect width="400" height="120" fill="#100d1f"/><g transform="translate(60,88)">'+[40,58,30,66,48,72].map((h,i)=>`<rect x="${i*52}" y="${-h}" width="34" height="${h}" rx="3" fill="#8b5cf6" class="th-grow" style="animation-delay:${i*0.2}s" opacity="0.75"/>`).join('')+'</g>'+lbl(20,'#8b5cf6','GMP Readiness · 77 SKUs'),
+
+    // ── Public health / utilities ──
+    // ContagionWatcher → genuinely live feed: animated EKG + blinking LIVE
+    'contagionwatcher':()=>'<rect width="400" height="120" fill="#1a0e16"/><path d="M0 64 H110 l14 -32 16 56 14 -38 12 20 H400" fill="none" stroke="#f43f5e" stroke-width="2.5" stroke-dasharray="600" class="th-draw" style="animation-duration:3s" opacity="0.9"/><circle cx="26" cy="30" r="5" fill="#f43f5e" class="th-blink"/>'+lbl(40,'#f43f5e','LIVE · CDC NNDSS Feed'),
+    // Webharvest → NOT a live feed: crawl/extraction graph with pulsing nodes
+    'webharvest-pro':()=>'<rect width="400" height="120" fill="#1a160b"/><g stroke="#f59e0b" stroke-width="1.2" opacity="0.4"><line x1="80" y1="40" x2="200" y2="30"/><line x1="80" y1="40" x2="180" y2="70"/><line x1="200" y1="30" x2="300" y2="55"/><line x1="180" y1="70" x2="300" y2="55"/><line x1="300" y1="55" x2="340" y2="85"/></g><g fill="#f59e0b">'+[[80,40],[200,30],[180,70],[300,55],[340,85]].map((p,i)=>`<circle cx="${p[0]}" cy="${p[1]}" r="6" class="th-pulse" style="animation-delay:${i*0.4}s"/>`).join('')+'</g>'+lbl(20,'#f59e0b','Web Scraper · Crawl Graph'),
+    // RSVP speed reader → one word flashing at a time
+    'rsvp-speed-reader':()=>'<rect width="400" height="120" fill="#0d1424"/><line x1="200" y1="34" x2="200" y2="44" stroke="#f59e0b" stroke-width="2"/><line x1="200" y1="76" x2="200" y2="86" stroke="#f59e0b" stroke-width="2"/><g text-anchor="middle" font-family="Segoe UI,sans-serif" font-size="26" font-weight="700" fill="#e2e8f0">'+['read','faster','one','word'].map((w,i)=>`<text class="th-word" x="200" y="68" style="animation-delay:${i*1.1}s">${w}</text>`).join('')+'</g>'+lbl(20,'#f59e0b','RSVP · Speed Reading')
   };
-  const catOf=card=>{
-    const fc=card.closest('section')?.id;
-    if(card.classList.contains('feat-card')){return card.querySelector('.feat-badge')?.textContent.match(/health/i)?'health':'imaging';}
-    const g=card.closest('.group');
-    if(g){const ic=g.querySelector('.group-icon');if(ic){if(ic.classList.contains('ic-imaging'))return'imaging';if(ic.classList.contains('ic-quality'))return'quality';if(ic.classList.contains('ic-health'))return'health';}}
-    return 'tools';
-  };
+
+  const slugOf=card=>{const m=(card.getAttribute('href')||'').match(/github\.com\/[^/]+\/([^/?#]+)/i);return m?m[1].toLowerCase():null};
+  const generic=()=>'<rect width="400" height="120" fill="#11161f"/><rect x="40" y="24" width="320" height="72" rx="8" fill="#0f1f3d" stroke="#475569" stroke-width="1.1" opacity="0.6"/><text class="thumb-label" x="60" y="56" font-size="13" fill="#94a3b8">&gt;_ open source</text><text x="300" y="64" font-family="monospace" font-size="26" fill="#475569" opacity="0.5">&lt;/&gt;</text>';
+
   document.querySelectorAll('.card, .feat-card').forEach(card=>{
-    const t=T[catOf(card)];if(!t)return;
+    const s=slugOf(card); const build=(s&&REPO[s])||generic;
     const wrap=document.createElement('div');wrap.className='card-thumb';wrap.setAttribute('aria-hidden','true');
-    wrap.innerHTML='<svg viewBox="0 0 400 120" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">'+t.svg+'</svg>';
+    wrap.innerHTML='<svg viewBox="0 0 400 120" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">'+build()+'</svg>';
     card.insertBefore(wrap,card.firstChild);
   });
 })();
